@@ -36,7 +36,7 @@ export async function bookCallToAirtable(bookCallData: BookCallData) {
     // Format the appointment details to be clearly visible
     const appointmentDetails = `📅 SCHEDULED CALL: ${validatedData.appointmentDate} at ${validatedData.appointmentTime}`
 
-    // Prepare the record for Airtable
+    // Prepare the record for Airtable - only include fields known to exist
     const record = {
       fields: {
         Name: `${validatedData.firstName} ${validatedData.lastName}`,
@@ -46,9 +46,6 @@ export async function bookCallToAirtable(bookCallData: BookCallData) {
         // Put appointment details at the beginning of the message for visibility
         Message: `${appointmentDetails}\n\nIndustry: ${validatedData.industry}\nCompany Size: ${validatedData.companySize}\n\nAdditional Message: ${validatedData.message}`,
         Source: "Call Booking Form",
-        "Form Type": "Call Booking", // Add a field to identify this as a call booking
-        "Appointment Date": validatedData.appointmentDate, // Add this as a separate field if it exists in Airtable
-        "Appointment Time": validatedData.appointmentTime, // Add this as a separate field if it exists in Airtable
         "Marketing Opt-In": validatedData.optIn ? "Yes" : "No",
         "Submission Date": new Date().toISOString(),
       },
