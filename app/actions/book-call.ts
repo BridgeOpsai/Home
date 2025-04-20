@@ -7,7 +7,7 @@ const bookCallSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(1, "Phone number is required"),
+  phone: z.string().optional(),
   companyName: z.string().min(1, "Company name is required"),
   industry: z.string().min(1, "Industry is required"),
   companySize: z.string().min(1, "Company size is required"),
@@ -27,27 +27,30 @@ export async function bookCallToAirtable(bookCallData: BookCallData) {
     // Airtable API endpoint
     const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY
     const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID
-    const AIRTABLE_TABLE_NAME = "Booked Calls"
+    const AIRTABLE_TABLE_NAME = "Form Submissions" // Using the existing table name
 
     if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
       throw new Error("Airtable credentials are not configured")
     }
 
+    // Format the appointment details to be clearly visible
+    const appointmentDetails = `📅 SCHEDULED CALL: ${validatedData.appointmentDate} at ${validatedData.appointmentTime}`
+
     // Prepare the record for Airtable
     const record = {
       fields: {
-        "First Name": validatedData.firstName,
-        "Last Name": validatedData.lastName,
+        Name: `${validatedData.firstName} ${validatedData.lastName}`,
         Email: validatedData.email,
-        Phone: validatedData.phone,
+        Phone: validatedData.phone || "",
         Company: validatedData.companyName,
-        Industry: validatedData.industry,
-        "Company Size": validatedData.companySize,
-        Message: validatedData.message,
-        "Appointment Date": validatedData.appointmentDate,
-        "Appointment Time": validatedData.appointmentTime,
+        // Put appointment details at the beginning of the message for visibility
+        Message: `${appointmentDetails}\n\nIndustry: ${validatedData.industry}\nCompany Size: ${validatedData.companySize}\n\nAdditional Message: ${validatedData.message}`,
+        Source: "Call Booking Form",
+        "Form Type": "Call Booking", // Add a field to identify this as a call booking
+        "Appointment Date": validatedData.appointmentDate, // Add this as a separate field if it exists in Airtable
+        "Appointment Time": validatedData.appointmentTime, // Add this as a separate field if it exists in Airtable
         "Marketing Opt-In": validatedData.optIn ? "Yes" : "No",
-        "Submission Date": new Date(),
+        "Submission Date": new Date().toISOString(),
       },
     }
 
@@ -71,7 +74,7 @@ export async function bookCallToAirtable(bookCallData: BookCallData) {
 
     return { success: true }
   } catch (error) {
-    console.error("Form submission error:", error)
+    console.error("Book call submission error:", error)
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error occurred",
