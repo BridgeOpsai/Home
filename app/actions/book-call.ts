@@ -7,7 +7,7 @@ const bookCallSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().optional(),
+  phone: z.string().min(1, "Phone number is required"),
   companyName: z.string().min(1, "Company name is required"),
   industry: z.string().min(1, "Industry is required"),
   companySize: z.string().min(1, "Company size is required"),
@@ -27,7 +27,7 @@ export async function bookCallToAirtable(bookCallData: BookCallData) {
     // Airtable API endpoint
     const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY
     const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID
-    const AIRTABLE_TABLE_NAME = "Form Submissions" // Changed from "Booked Calls" to "Form Submissions"
+    const AIRTABLE_TABLE_NAME = "Booked Calls"
 
     if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
       throw new Error("Airtable credentials are not configured")
@@ -36,16 +36,17 @@ export async function bookCallToAirtable(bookCallData: BookCallData) {
     // Prepare the record for Airtable
     const record = {
       fields: {
-        Name: `${validatedData.firstName} ${validatedData.lastName}`, // Combine first and last name
+        "First Name": validatedData.firstName,
+        "Last Name": validatedData.lastName,
         Email: validatedData.email,
-        Phone: validatedData.phone || "",
+        Phone: validatedData.phone,
         Company: validatedData.companyName,
-        Message: `Appointment Request: ${validatedData.appointmentDate} at ${validatedData.appointmentTime}
-Industry: ${validatedData.industry}
-Company Size: ${validatedData.companySize}
-Message: ${validatedData.message}`,
-        Source: "Book Call Form",
-        "Marketing Opt-In": validatedData.optIn ? "Yes" : "No", // Convert boolean to Yes/No string
+        Industry: validatedData.industry,
+        "Company Size": validatedData.companySize,
+        Message: validatedData.message,
+        "Appointment Date": validatedData.appointmentDate,
+        "Appointment Time": validatedData.appointmentTime,
+        "Marketing Opt-In": validatedData.optIn ? "Yes" : "No",
         "Submission Date": new Date(),
       },
     }
@@ -70,7 +71,7 @@ Message: ${validatedData.message}`,
 
     return { success: true }
   } catch (error) {
-    console.error("Book call submission error:", error)
+    console.error("Form submission error:", error)
     return {
       success: false,
       error: error instanceof Error ? error.message : "Unknown error occurred",
