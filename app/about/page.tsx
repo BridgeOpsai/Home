@@ -47,7 +47,7 @@ export default function AboutPage() {
                 <div>
                   <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Our Story</h2>
                   <p className="mt-3 text-lg text-gray-500">
-                    <strong>BridgeOps.ai was founded by Adam Pierce in 2023</strong>, an AI enthusiast and business
+                    <strong>BridgeOps.ai was founded by Maury Eldeiry in 2023</strong>, an AI enthusiast and business
                     automation expert who recognized a gap in the market: small to medium-sized businesses were being
                     left behind in the AI revolution.
                   </p>

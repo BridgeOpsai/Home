@@ -65,6 +65,7 @@ export default function Navbar() {
       ],
     },
     { name: "Case Studies", href: "/case-studies" },
+    { name: "Investment Fund", href: "/investment-fund" },
     { name: "Contact", href: "/contact" },
   ]
 
