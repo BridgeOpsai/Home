@@ -2,10 +2,11 @@
 
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
-import { Menu, X, ChevronDown } from "lucide-react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { Menu, X, ChevronDown } from "lucide-react"
 
-export default function Navbar() {
+export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null)
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -70,17 +71,23 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
+    <nav className="bg-white shadow-lg fixed w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
-              <img src="/images/bridgeops-logo.png" alt="BridgeOps.ai Logo" className="h-12 w-auto" />
+              <Image
+                src="/images/bridgeops-logo.png"
+                alt="BridgeOps.ai Logo"
+                width={200}
+                height={50}
+                className="h-12 w-auto"
+              />
             </Link>
           </div>
 
-          {/* Desktop menu */}
-          <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
             {menuItems.map((item) => (
               <div
                 key={item.name}
@@ -90,7 +97,7 @@ export default function Navbar() {
               >
                 <Link
                   href={item.href}
-                  className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 flex items-center"
+                  className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 flex items-center"
                 >
                   {item.name}
                   {item.hasDropdown && <ChevronDown className="ml-1 h-4 w-4" />}
@@ -122,71 +129,77 @@ export default function Navbar() {
               </div>
             ))}
             <Link href="/book-call">
-              <Button className="ml-2 bg-blue-600 hover:bg-blue-700">Free Consultation</Button>
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                Free Consultation
+              </Button>
             </Link>
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex items-center md:hidden">
+          <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-50 focus:outline-none"
+              className="text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {menuItems.map((item) => (
-              <div key={item.name}>
-                <Link
-                  href={item.href}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-                  onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
-                >
-                  <div className="flex justify-between items-center">
-                    {item.name}
-                    {item.hasDropdown && (
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault()
-                          setHoveredMenu(hoveredMenu === item.name ? null : item.name)
-                        }}
-                      >
-                        <ChevronDown className="h-4 w-4" />
-                      </button>
-                    )}
-                  </div>
-                </Link>
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+              {menuItems.map((item) => (
+                <div key={item.name}>
+                  <Link
+                    href={item.href}
+                    className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600"
+                    onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
+                  >
+                    <div className="flex justify-between items-center">
+                      {item.name}
+                      {item.hasDropdown && (
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault()
+                            setHoveredMenu(hoveredMenu === item.name ? null : item.name)
+                          }}
+                        >
+                          <ChevronDown className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  </Link>
 
-                {/* Mobile dropdown items */}
-                {item.hasDropdown && hoveredMenu === item.name && (
-                  <div className="pl-4 space-y-1">
-                    {item.dropdownItems.map((dropdownItem) => (
-                      <Link
-                        key={dropdownItem.name}
-                        href={dropdownItem.href}
-                        className="block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {dropdownItem.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            <Link href="/book-call">
-              <Button className="w-full mt-4 bg-blue-600 hover:bg-blue-700">Free Consultation</Button>
-            </Link>
+                  {/* Mobile dropdown items */}
+                  {item.hasDropdown && hoveredMenu === item.name && (
+                    <div className="pl-4 space-y-1">
+                      {item.dropdownItems.map((dropdownItem) => (
+                        <Link
+                          key={dropdownItem.name}
+                          href={dropdownItem.href}
+                          className="block px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600"
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          {dropdownItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+              <Link href="/book-call">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium w-full mt-2">
+                  Free Consultation
+                </Button>
+              </Link>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
   )
 }
+
+export default Navbar
