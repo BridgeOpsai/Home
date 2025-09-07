@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export default function Hero() {
   return (
-    <div className="relative overflow-hidden bg-white">
+    <div className="relative overflow-hidden bg-white pt-16 md:pt-0">
       {/* Background decorative elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-blue-50 via-indigo-50 to-white"></div>
@@ -40,12 +40,12 @@ export default function Hero() {
             </div>
 
             {/* Modern illustration */}
-            <div className="hidden lg:block relative">
-              <div className="relative h-[500px] w-full flex items-center justify-center">
+            <div className="block relative mt-8 lg:mt-0">
+              <div className="relative h-[400px] md:h-[500px] w-full flex items-center justify-center">
                 {/* Central element */}
                 <div className="relative z-10">
-                  <div className="w-64 h-64 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-xl flex items-center justify-center transform transition-transform hover:scale-105 duration-500">
-                    <div className="text-white text-5xl font-bold">AI</div>
+                  <div className="w-48 h-48 md:w-64 md:h-64 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-xl flex items-center justify-center transform transition-transform hover:scale-105 duration-500">
+                    <div className="text-white text-3xl md:text-5xl font-bold">AI</div>
                   </div>
 
                   {/* Pulsing ring */}
@@ -56,12 +56,12 @@ export default function Hero() {
                 </div>
 
                 {/* Floating elements */}
-                <div className="absolute top-12 left-0 bg-white p-4 rounded-lg shadow-lg animate-float">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                <div className="absolute top-8 md:top-12 left-0 bg-white p-3 md:p-4 rounded-lg shadow-lg animate-float">
+                  <div className="flex items-center space-x-2 md:space-x-3">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-100 rounded-full flex items-center justify-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-blue-600"
+                        className="h-4 w-4 md:h-6 md:w-6 text-blue-600"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -75,18 +75,18 @@ export default function Hero() {
                       </svg>
                     </div>
                     <div>
-                      <div className="font-medium text-gray-900">Automate</div>
-                      <div className="text-sm text-gray-500">Workflows</div>
+                      <div className="font-medium text-gray-900 text-sm md:text-base">Automate</div>
+                      <div className="text-xs md:text-sm text-gray-500">Workflows</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="absolute bottom-12 left-12 bg-white p-4 rounded-lg shadow-lg animate-float animation-delay-2000">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                <div className="absolute bottom-8 md:bottom-12 left-8 md:left-12 bg-white p-3 md:p-4 rounded-lg shadow-lg animate-float animation-delay-2000">
+                  <div className="flex items-center space-x-2 md:space-x-3">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-indigo-100 rounded-full flex items-center justify-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-indigo-600"
+                        className="h-4 w-4 md:h-6 md:w-6 text-indigo-600"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -100,18 +100,18 @@ export default function Hero() {
                       </svg>
                     </div>
                     <div>
-                      <div className="font-medium text-gray-900">Accelerate</div>
-                      <div className="text-sm text-gray-500">Growth</div>
+                      <div className="font-medium text-gray-900 text-sm md:text-base">Accelerate</div>
+                      <div className="text-xs md:text-sm text-gray-500">Growth</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="absolute top-1/2 right-0 bg-white p-4 rounded-lg shadow-lg animate-float animation-delay-1000">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                <div className="absolute top-1/2 right-0 bg-white p-3 md:p-4 rounded-lg shadow-lg animate-float animation-delay-1000">
+                  <div className="flex items-center space-x-2 md:space-x-3">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-purple-100 rounded-full flex items-center justify-center">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-purple-600"
+                        className="h-4 w-4 md:h-6 md:w-6 text-purple-600"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -125,8 +125,8 @@ export default function Hero() {
                       </svg>
                     </div>
                     <div>
-                      <div className="font-medium text-gray-900">Optimize</div>
-                      <div className="text-sm text-gray-500">Results</div>
+                      <div className="font-medium text-gray-900 text-sm md:text-base">Optimize</div>
+                      <div className="text-xs md:text-sm text-gray-500">Results</div>
                     </div>
                   </div>
                 </div>
